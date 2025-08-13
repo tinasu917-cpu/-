@@ -6,41 +6,52 @@
 }
 /*標題設定*/
 /* 版頭條 */
+:root{
+  --header-h: 80px;                         /* 導覽列高度 */
+  --header-bg: rgba(255,255,255,.9);        /* 白底、可帶點透明 */
+  --header-ink: #111;                       /* 文字顏色（黑） */
+  --header-blur: 8px;                       /* 背景模糊，可要可不要 */
+}
+/* 固定在頂端 + 白底黑字 */
 .site-header{
-  position: sticky; top:0; z-index:1000;
-  background:#231c1a;
-  height:72px;
-}
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--header-h); z-index: 1000;
 
-/* 內層：左右分布 */
-.header-inner{
-  height:72px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:24px;
-  padding:0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+
+  background: var(--header-bg);
+  backdrop-filter: blur(var(--header-blur));
+  -webkit-backdrop-filter: blur(var(--header-blur));
+  border-bottom: 1px solid rgba(0,0,0,.06);   /* 細線分隔 */
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  color: var(--header-ink);
 }
-/* 左：文字品牌 */
-.brand-text{
-  margin:0;
-  font-size:28px;            /* 想更大就調這裡 */
-  line-height:1;
-  letter-spacing:.5px;
+/* 讓內容不被固定 header 壓住 */
+body{ padding-top: var(--header-h); }
+/* Logo（沿用你的圖） */
+.brand{
+  width: 240px; height: 64px; margin: 0;
+  background: url("./img/logo.png") no-repeat left center / contain;
+  color: transparent;
 }
-.brand-text a{
-  color:#fff; text-decoration:none; font-weight:800;
+.brand__text{ position: absolute; left: -10000px; }
+/* 導覽列：白底黑字 */
+.site-header nav ul{
+  list-style: none; display: flex; gap: 32px;
+  margin: 0; padding: 0; align-items: center;
 }
-/* 右：選單 */
-.main-nav ul{
-  display:flex; gap:40px;
-  list-style:none; margin:0; padding:0; align-items:center;
+.site-header nav a{
+  color: var(--header-ink);
+  text-decoration: none;
+  font-weight: 800; font-size: 20px; line-height: 1;
+  padding: 10px 8px;
 }
-.main-nav a{
-  color:#fff; text-decoration:none; font-weight:600; opacity:.9;
-  transition:opacity .2s ease;
+.site-header nav a:hover{
+  color: #444;                                /* 滑過微變深 */
 }
-.main-nav a:hover{ opacity:1; text-decoration:underline; }
+/* 錨點跳轉不被固定列擋住 */
+section[id]{ scroll-margin-top: calc(var(--header-h) + 8px); }
 
 
 /*簡介設定*/
@@ -348,4 +359,5 @@
     justify-self: center;     /* 圖片置中 */
     max-width: 460px;         /* 可依需要調整 */
   }
+
 }
